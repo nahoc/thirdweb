@@ -2,18 +2,16 @@
 // eslint-disable-next-line better-tree-shaking/no-top-level-side-effects
 globalThis.global = globalThis;
 
-export type { ContractType } from "./contracts";
-
-export type { Role } from "./common/role";
-
-export * from "./contracts";
-
 export { StaticJsonRpcBatchProvider } from "./lib/static-batch-rpc";
 
 // export integration things
 export * from "./integrations/thirdweb-checkout";
 
-// explicitly export the *TYPES* of prebuilt contracts
+// re-export from functions entry point
+export * from "./functions";
+
+//#region @r/packages/sdk/src/evm/contracts/*
+export * from "./contracts";
 export type { Edition } from "./contracts/prebuilt-implementations/edition";
 export type { EditionDrop } from "./contracts/prebuilt-implementations/edition-drop";
 export type { Marketplace } from "./contracts/prebuilt-implementations/marketplace";
@@ -28,9 +26,7 @@ export type { Token } from "./contracts/prebuilt-implementations/token";
 export type { TokenDrop } from "./contracts/prebuilt-implementations/token-drop";
 export type { Vote } from "./contracts/prebuilt-implementations/vote";
 export type { SmartContract } from "./contracts/smart-contract";
-
-// re-export from functions entry point
-export * from "./functions";
+//#endregion @r/packages/sdk/src/evm/contracts/*
 
 //#region @r/packages/sdk/src/evm/core
 export * from "./core/types";
@@ -96,6 +92,7 @@ export * from "./core/sdk";
 export * from "./common/error";
 export * from "./common/snapshots";
 export * from "./common/role";
+export type { Role } from "./common/role";
 export * from "./common/metadata-resolver";
 export * from "./common/gas-price";
 export * from "./common/fetchContractMetadata";
