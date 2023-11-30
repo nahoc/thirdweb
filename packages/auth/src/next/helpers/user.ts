@@ -20,22 +20,30 @@ export function getCookie(
 
 export function getActiveCookie(
   req: GetServerSidePropsContext["req"] | NextRequest | NextApiRequest,
+  ctx?: ThirdwebAuthContext,
 ): string | undefined {
   if (!req.cookies) {
     return undefined;
   }
 
-  const activeAccount = getCookie(req, THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE);
+  const activeAccount = getCookie(
+    req,
+    ctx?.cookieOptions?.activeTokenPrefix ??
+      THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE,
+  );
   if (activeAccount) {
-    return `${THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX}_${activeAccount}`;
+    return `${
+      ctx?.cookieOptions?.tokenPrefix ?? THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX
+    }_${activeAccount}`;
   }
 
   // If active account is not present, then use the old default
-  return THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX;
+  return ctx?.cookieOptions?.tokenPrefix ?? THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX;
 }
 
 export function getToken(
   req: GetServerSidePropsContext["req"] | NextRequest | NextApiRequest,
+  ctx?: ThirdwebAuthContext,
 ): string | undefined {
   if (!!(req as NextApiRequest).headers["authorization"]) {
     const authorizationHeader = (req as NextApiRequest).headers[
@@ -50,7 +58,7 @@ export function getToken(
     return undefined;
   }
 
-  const activeCookie = getActiveCookie(req);
+  const activeCookie = getActiveCookie(req, ctx);
   if (!activeCookie) {
     return undefined;
   }

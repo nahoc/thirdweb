@@ -14,18 +14,27 @@ export function getCookie(req: Request, cookie: string): string | undefined {
   return req.cookies[cookie];
 }
 
-export function getActiveCookie(req: Request): string | undefined {
+export function getActiveCookie(
+  req: Request,
+  ctx?: ThirdwebAuthContext,
+): string | undefined {
   if (!req.cookies) {
     return undefined;
   }
 
-  const activeAccount = getCookie(req, THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE);
+  const activeAccount = getCookie(
+    req,
+    ctx?.cookieOptions?.activeTokenPrefix ??
+      THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE,
+  );
   if (activeAccount) {
-    return `${THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX}_${activeAccount}`;
+    return `${
+      ctx?.cookieOptions?.tokenPrefix ?? THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX
+    }_${activeAccount}`;
   }
 
   // If active account is not present, then use the old default
-  return THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX;
+  return ctx?.cookieOptions?.tokenPrefix ?? THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX;
 }
 
 /**
@@ -33,7 +42,10 @@ export function getActiveCookie(req: Request): string | undefined {
  * @param req
  * @returns
  */
-export function getToken(req: Request): string | undefined {
+export function getToken(
+  req: Request,
+  ctx?: ThirdwebAuthContext,
+): string | undefined {
   if (req.headers["authorization"]) {
     const authorizationHeader = req.headers["authorization"].split(" ");
     if (authorizationHeader?.length === 2) {
@@ -45,7 +57,7 @@ export function getToken(req: Request): string | undefined {
     return undefined;
   }
 
-  const activeCookie = getActiveCookie(req);
+  const activeCookie = getActiveCookie(req, ctx);
   if (!activeCookie) {
     return undefined;
   }

@@ -14,7 +14,7 @@ export default async function handler(
     });
   }
 
-  const activeCookie = getActiveCookie(req);
+  const activeCookie = getActiveCookie(req, ctx);
   if (!activeCookie) {
     return res.status(400).json({
       error: "No logged in user to logout.",

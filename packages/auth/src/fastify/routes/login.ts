@@ -94,7 +94,8 @@ export const loginHandler = (
         },
       );
       res.setCookie(
-        THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE,
+        ctx?.cookieOptions?.activeTokenPrefix ??
+          THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE,
         req.body.payload.payload.address,
         {
           domain: ctx.cookieOptions?.domain,

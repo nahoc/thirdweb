@@ -22,7 +22,7 @@ export const logoutHandler = (
       },
     },
     handler: async (req, res) => {
-      const activeCookie = getActiveCookie(req);
+      const activeCookie = getActiveCookie(req, ctx);
       if (!activeCookie) {
         return res.status(400).send({
           error: "No logged in user to logout.",

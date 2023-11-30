@@ -24,6 +24,10 @@ export interface ThirdwebAuthConfig {
    */
   domain: string;
 
+  authTokenPrefix?: string;
+
+  authActiveTokenPrefix?: string;
+
   /**
    * Secure storage to use for storing the auth token when using JWT tokens.
    *
