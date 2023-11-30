@@ -24,7 +24,7 @@ export const userHandler = (
 
       // Importantly, make sure the user was actually logged in before refreshing
       if (user) {
-        const token = getToken(req);
+        const token = getToken(req, ctx);
         if (token) {
           const payload = ctx.auth.parseToken(token);
 

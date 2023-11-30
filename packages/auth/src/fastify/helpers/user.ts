@@ -71,7 +71,7 @@ export async function getUser<
   req: FastifyRequest,
   ctx: ThirdwebAuthContext<TData, TSession>,
 ): Promise<ThirdwebAuthUser<TData, TSession> | null> {
-  const token = getToken(req);
+  const token = getToken(req, ctx as ThirdwebAuthContext);
 
   if (!token) {
     console.error("Error: No auth token found");
