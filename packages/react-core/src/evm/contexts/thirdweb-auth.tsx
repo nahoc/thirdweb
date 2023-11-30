@@ -24,9 +24,15 @@ export interface ThirdwebAuthConfig {
    */
   domain: string;
 
-  authTokenPrefix?: string;
+  /**
+   * The auth token prefix. Defaults to `thirdweb_auth_token`
+   */
+  tokenPrefix?: string;
 
-  authActiveTokenPrefix?: string;
+  /**
+   * The auth token prefix for an active account. Defaults to `thirdweb_auth_active_account`
+   */
+  activeTokenPrefix?: string;
 
   /**
    * Secure storage to use for storing the auth token when using JWT tokens.
