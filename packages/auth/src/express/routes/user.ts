@@ -46,7 +46,7 @@ export default async function handler(
         res.setHeader("Set-Cookie", [
           serialize(
             `${
-              ctx?.cookieOptions?.tokenPrefix ??
+              ctx.cookieOptions?.tokenPrefix ??
               THIRDWEB_AUTH_TOKEN_COOKIE_PREFIX
             }_${user.address}`,
             refreshedToken,
@@ -60,7 +60,7 @@ export default async function handler(
             },
           ),
           serialize(
-            ctx?.cookieOptions?.activeTokenPrefix ??
+            ctx.cookieOptions?.activeTokenPrefix ??
               THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE,
             user.address,
             {

@@ -54,7 +54,7 @@ export const switchAccountHandler = (
       }
 
       res.setCookie(
-        ctx?.cookieOptions?.activeTokenPrefix ??
+        ctx.cookieOptions?.activeTokenPrefix ??
           THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE,
         req.body.address,
         {

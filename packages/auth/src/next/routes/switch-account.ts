@@ -52,7 +52,7 @@ export default async function handler(
 
   res.setHeader("Set-Cookie", [
     serialize(
-      ctx?.cookieOptions?.activeTokenPrefix ??
+      ctx.cookieOptions?.activeTokenPrefix ??
         THIRDWEB_AUTH_ACTIVE_ACCOUNT_COOKIE,
       parsedPayload.data.address,
       {
